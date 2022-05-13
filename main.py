@@ -4,7 +4,7 @@ import string
 import time
 
 # prepare character lists for future key bindings
-LETTERS = list(string.ascii_lowercase)
+LETTERS = list(string.ascii_lowercase)+list(string.ascii_uppercase)
 DIGITS = list(string.digits)
 # wow, this list automation takes even care of the problematic cases (includes both "'" and '"')
 MARKS = list(string.punctuation)
@@ -14,7 +14,7 @@ EXAMPLE = 'Pineapple Apple Pen'
 CHARSET = LETTERS+EXTRAS
 TOP_CPS = 10
 
-# icon import&resize (non-crappy thanks to this pillow fork)
+# image import&resize (non-crappy thanks to this pillow fork)
 icon = Image.open("images/monkey.png")
 icon = icon.resize((20, 20), Image.Resampling.LANCZOS)
 rfr = Image.open("images/refresh.png")
@@ -71,7 +71,7 @@ def text_handler(text: str):
     # get ready to catch (and compare on the fly) inputs from a keyboard
     def check(key_pressed):
         """compares an event (some symbol has just been typed) with a next symbol (on the right) of the text line"""
-        if key_pressed.char == text_field.get("insert", "insert+1c").lower():
+        if key_pressed.char.lower() == text_field.get("insert", "insert+1c").lower():
             curr_succ.set(True)
         else:
             print(key_pressed.char)
