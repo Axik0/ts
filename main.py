@@ -98,14 +98,11 @@ def text_handler(text: str):
     # after all, get rid of old tag and change the text color back to normal
     text_field.tag_delete("prev")
     text_field['fg'] = text_color_a
-    # refocus to retry button for quicker interaction
-    retry_butt.focus_set()
     retry_butt['image'] = rfr_tk
     # tempo calculations (with errors as )
     average_cps = (len(text) - 1 + curr_error.get())/c_time
-    print(average_cps)
-    relative_tempo = 100*average_cps/TOP_CPS
-    window.scv.set(round(relative_tempo))
+    relative_cps = 100*average_cps/TOP_CPS
+    window.scv.set(round(relative_cps))
 
 head_label = Label(window, text="Start typing the line below:", font=main_font)
 head_label.grid(row=0, column=0, columnspan=2, pady=5)
