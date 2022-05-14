@@ -10,7 +10,7 @@ DIGITS = list(string.digits)
 MARKS = list(string.punctuation)
 EXTRAS = ['<space>']
 
-EXAMPLE = 'Pineapple Apple Pen'
+EXAMPLE = 'Pineapple Apple Pen Pineapple Apple Pen Pineapple Apple Pen'
 CHARSET = LETTERS+EXTRAS
 TOP_CPS = 10
 
@@ -93,6 +93,9 @@ def text_handler(text: str):
         if c_counter != 0:
             c_time += toc - tic
         c_counter += 1
+        # exit when the text doesn't fit text_field and we can't see any more characters
+        if c_counter == 40*3:
+            break
     # prevent user from typing any further, 2 lines could be deleted with a SAME gain but this way is more stable
     binder(check, mode=False)
     # after all, get rid of old tag and change the text color back to normal
@@ -113,7 +116,7 @@ text_field.grid(row=1, column=0, columnspan=2, padx=18)
 
 window.scv = IntVar()
 w2 = Scale(window, from_=0, to=100, tickinterval=25, orient=HORIZONTAL, length=400, state=DISABLED, showvalue=False,
-           font=main_font, label='SPEED', variable=window.scv, troughcolor=focus_color)
+           font=main_font, label=f'CPS Rate (relative to {TOP_CPS})', variable=window.scv, troughcolor=focus_color)
 w2.grid(row=2, column=0, sticky=N+S+W+E, padx=15)
 
 rfr_tk = ImageTk.PhotoImage(rfr)
