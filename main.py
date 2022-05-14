@@ -16,7 +16,7 @@ TOP_CPS = 10
 
 # image import&resize (non-crappy thanks to this pillow fork)
 icon = Image.open("images/monkey.png")
-icon = icon.resize((20, 20), Image.Resampling.LANCZOS)
+icon = icon.resize((35, 35), Image.Resampling.LANCZOS)
 rfr = Image.open("images/refresh.png")
 rfr = rfr.resize((35, 35), Image.Resampling.LANCZOS)
 tp = Image.open("images/click.png")
@@ -79,8 +79,8 @@ def text_handler(text: str):
     binder(check, CHARSET)
     retry_butt['image'] = tp_tk
     for _ in text:
-        tic = time.perf_counter()
         # stop, wait until curr_succ variable changes (False->True) i.e. until we will have got a correct key
+        tic = time.perf_counter()
         window.wait_variable(curr_succ)
         toc = time.perf_counter()
         curr_succ.set(False)
@@ -106,6 +106,8 @@ def text_handler(text: str):
     average_cps = (len(text) - 1 + curr_error.get())/c_time
     relative_cps = 100*average_cps/TOP_CPS
     window.scv.set(round(relative_cps))
+    if relative_cps >= 90:
+        retry_butt['image'] = icon_tk
 
 head_label = Label(window, text="Start typing the line below:", font=main_font)
 head_label.grid(row=0, column=0, columnspan=2, pady=5)
