@@ -10,7 +10,7 @@ DIGITS = list(string.digits)
 MARKS = list(string.punctuation)
 EXTRAS = ['<space>']
 
-EXAMPLE = 'Pineapple Apple Pen Pineapple Apple Pen Pineapple Apple Pen'
+EXAMPLE = 'Pineapple Apple Pen'
 CHARSET = LETTERS+EXTRAS
 TOP_CPS = 10
 
@@ -34,10 +34,10 @@ main_font = ("Helvetica", 16)
 # GUI preliminaries
 window = Tk()
 window.configure(background=main_color)
-window.geometry("500x200")
+window.geometry("520x200")
 window.minsize(520, 200)
 window.maxsize(600, 300)
-window.title(" Typing monke")
+window.title("Typing Monke")
 icon_tk = ImageTk.PhotoImage(icon)
 window.iconphoto(False, icon_tk)
 
@@ -46,7 +46,6 @@ def binder(command, lst=CHARSET, mode=True):
     """takes key names from the list and binds/unbinds to/from a single callback"""
     for key in lst:
         text_field.bind(key, command) if mode else text_field.unbind(key)
-# k_binder(test, ['a','w'], EXTRAS)
 
 
 def text_handler(text: str):
@@ -101,13 +100,15 @@ def text_handler(text: str):
     # after all, get rid of old tag and change the text color back to normal
     text_field.tag_delete("prev")
     text_field['fg'] = text_color_a
-    retry_butt['image'] = rfr_tk
-    # tempo calculations (with errors as )
-    average_cps = (len(text) - 1 + curr_error.get())/c_time
+    # tempo calculations (with errors)
+    average_cps = (len(text) - 1 - curr_error.get())/c_time
     relative_cps = 100*average_cps/TOP_CPS
     window.scv.set(round(relative_cps))
     if relative_cps >= 90:
         retry_butt['image'] = icon_tk
+    else:
+        retry_butt['image'] = rfr_tk
+
 
 head_label = Label(window, text="Start typing the line below:", font=main_font)
 head_label.grid(row=0, column=0, columnspan=2, pady=5)
