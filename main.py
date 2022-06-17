@@ -8,13 +8,13 @@ LETTERS_L = set(string.ascii_lowercase)
 LETTERS_U = set(string.ascii_uppercase)
 DIGITS = set(string.digits)
 # wow, this list automation takes even care of the problematic cases (includes both "'" and '"')
-MARKS = set(string.punctuation)
+MARKS = set(string.punctuation)-{"#"}
 EXTRAS = ['<space>']
 
 EXAMPLE = 'Pineapple, Apple Pen'
 TOP_CPS = 10
 
-charset = set.union(LETTERS_L, LETTERS_U, EXTRAS, MARKS)
+charset = set.union(LETTERS_L, LETTERS_U, EXTRAS, MARKS-{"<"})
 markset = set.union(MARKS-{"<"}, {" "})
 
 em = False
